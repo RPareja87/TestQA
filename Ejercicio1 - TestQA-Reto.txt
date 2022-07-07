@@ -1,0 +1,160 @@
+Prueba QA Automation
+Ejercicio 1 (QAA-01) API Temperatura
+Descripción:
+Crear los casos de prueba posibles para testear el siguiente microservicio GET, que recibe:
+En el request la fecha del día actual en formato DD-MM-AAAA.
+Dos headers, el primero es "Country", cuyo dominio de valores puede ser "Chile" o "Argentina" y el segundo es "City", cuyo dominio de
+valores es "Santiago","Arica", "Chiloe" (cuando se trata de Country Chile) y "BuenosAires", "SanJuan" (cuando country es Argentina)
+Cuando el resultado es positivo entrega status ok y código http 200 y en caso de error el status es "client error" y en caso de error de
+conexion el status es "server error" y en el caso de codigo para cada uno de estos status se entrega los codigos http de error estándar.
+Considera que cuando es un País distinto a los señalados o una ciudad distinta el response "País y Ciudad incorrectos", y que todos los
+campos a ingresar son Sensitive Case.
+El response del microservicio devuelve la temperaturaActual y temperaturaDiaSiguiente en formato json.
+
+## Resolución ##
+
+Request: DD-MM-AAAA
+Headers: Country (Chile o Argentina) | City (Santiago, Arica, Chiloe o BuenosAires,SanJuan)
+Response: {
+			"temperaturaActual": 30,
+			"temperaturaDiaSiguiente": 29
+		  }
+													 
+Casos de Prueba:
+
+- Validar el request con todos los datos correctos (Request con formato correcto DD-MM-AAAA, Headers Correctos)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-07-2022)
+	5. Ingresar en el header Country el valor "Chile"
+	6. Ingresar en el header City el valor "Santiago"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response tenga los campos temperaturaActual y temperaturaDiaSiguiente
+	10. Validar que los valores de temperaturaActual y temperaturaDiaSiguiente estén dentro del rango de temperatura y no sean nulos.
+	   
+- Validar el GET con un request de fecha incorrecta: MM-DD-AA
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "Chile"
+	6. Ingresar en el header City el valor "Santiago"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje indicando que la fecha es errónea
+	
+- Validar el GET con un formato de fecha correcto y futura
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto y Futuro (ejemplo: https://api-temperatura.com/01-01-2030)
+	5. Ingresar en el header Country el valor "Chile"
+	6. Ingresar en el header City el valor "Santiago"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response Muestre un mensaje de validacion indicando no se aceptan fechas pasadas
+	
+- Validar el GET sin el Header Country
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-07-2022)
+	5. Ingresar en el header City el valor "Santiago"
+	6. Ejecutar el request
+	7. Validar mensaje de error
+	
+- Validar el GET sin el Header City
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-07-2022)
+	5. Ingresar en el header Country el valor "Chile"
+	6. Ejecutar el request
+	7. Validar mensaje de error
+
+- Validar el GET sin los Headers Country y City
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-07-2022)
+	5. Ejecutar el request
+	6. Validar mensaje de error
+	
+- Validar el GET con los Headers Country y City	vacios
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-07-2022)
+	5. Ingresar en el header Country el valor vacio
+	6. Ingresar en el header Coty el valor vacio
+	7. Ejecutar el request
+	8. Validar mensaje de error 
+
+- Validar el GET ingresando un Country Header incorrecto(Perú)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "Perú"
+	6. Ingresar en el header City el valor "Santiago"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje de "País y Ciudad incorrectos"
+	
+- Validar el GET ingresando Header City incorrecto(Argentina-Lima)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "Argentina"
+	6. Ingresar en el header City el valor "Lima"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje de "País y Ciudad incorrectos"
+	
+- Caso de prueba Case Sensitive Upercase Header Country (Mayúscula)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "ARGENTINA"
+	6. Ingresar en el header City el valor "BuenosAires"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje de "País y Ciudad incorrectos"
+	
+- Caso de prueba Case Sensitive Upercase Header Country (Minúscula)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "argentina"
+	6. Ingresar en el header City el valor "BuenosAires"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje de "País y Ciudad incorrectos"
+	
+- Caso de prueba Case Sensitive UperCase Header City (Mayuscula)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "Argentina"
+	6. Ingresar en el header City el valor "BUENOSAIRES"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje de "País y Ciudad incorrectos"
+	
+- Caso de prueba Case Sensitive Lowercase Header City (Minúscula)
+	1. Ingresar a Postman
+	2. Crear un nuevo Request
+	3. Seleccionar la opción GET
+	4. Ingresar el URL Correcto (ejemplo: https://api-temperatura.com/06-31-2022)
+	5. Ingresar en el header Country el valor "Argentina"
+	6. Ingresar en el header City el valor "buenosaires"
+	7. Ejecutar el Request
+	8. Validar el status code 200 OK
+	9. Validar que el response muestre un mensaje de "País y Ciudad incorrectos"
+	

@@ -1,0 +1,348 @@
+{
+	"info": {
+		"_postman_id": "85b6dd2e-8ade-4cce-8163-cda31d588cb6",
+		"name": "TestQA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11209481"
+	},
+	"item": [
+		{
+			"name": "Get UserID - Content user id 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"- Validar Contenido Response id=1\r",
+							"    1. Ingresar el URL https://jsonplaceholder.typicode.com/users?id=1\r",
+							"    2. Ejecutar el Request\r",
+							"    3. Validar el status code 200 ok\r",
+							"    4. Validar el contenido del response\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify content get user id=1 result\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].id).to.eql(1);\r",
+							"    pm.expect(jsonData[0].name).to.eql(\"Leanne Graham\");\r",
+							"    pm.expect(jsonData[0].username).to.eql(\"Bret\");\r",
+							"    pm.expect(jsonData[0].email).to.eql(\"Sincere@april.biz\");\r",
+							"    pm.expect(jsonData[0].address.street).to.eql(\"Kulas Light\");\r",
+							"    pm.expect(jsonData[0].address.suite).to.eql(\"Apt. 556\");\r",
+							"    pm.expect(jsonData[0].address.city).to.eql(\"Gwenborough\");\r",
+							"    pm.expect(jsonData[0].address.zipcode).to.eql(\"92998-3874\");\r",
+							"    pm.expect(jsonData[0].address.geo.lat).to.eql(\"-37.3159\");\r",
+							"    pm.expect(jsonData[0].address.geo.lng).to.eql(\"81.1496\");\r",
+							"    pm.expect(jsonData[0].phone).to.eql(\"1-770-736-8031 x56442\");\r",
+							"    pm.expect(jsonData[0].website).to.eql(\"hildegard.org\");\r",
+							"    pm.expect(jsonData[0].company.name).to.eql(\"Romaguera-Crona\");\r",
+							"    pm.expect(jsonData[0].company.catchPhrase).to.eql(\"Multi-layered client-server neural-net\");\r",
+							"    pm.expect(jsonData[0].company.bs).to.eql(\"harness real-time e-markets\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users?id=1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get UserID - Verify Content user id 1000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"- Validar Response con un ID que no existe id=1000\r",
+							"    1. Ingresar el URL https://jsonplaceholder.typicode.com/users?id=1000\r",
+							"    2. Ejecutar el Request\r",
+							"    3. Validar el status code 200 ok\r",
+							"    4. Validar el contenido del response vacío\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify content get user id=1000 result\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData==0).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/users?id=1000",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test 5000 photos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"- Validar el tiempo de respuesta sea menor a 500ms\r",
+							"    1. Ingresar el URL https://jsonplaceholder.typicode.com/photos\r",
+							"    2. Ejecutar el Request\r",
+							"    3. Validar el status code 200 OK\r",
+							"    4. Validar que el tiempo de respuesta sea menor a 600ms\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"Cadena en Status es OK\", function() {\r",
+							"    pm.response.to.have.status(\"OK\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Tiempo de respuesta menor a 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/photos",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test 5000 contador de elementos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"- Validar que existan 5000 elementos en el response\r",
+							"    1. Ingresar el URL https://jsonplaceholder.typicode.com/photos\r",
+							"    2. Ejecutar el Request\r",
+							"    3. Validar el status code 200 OK\r",
+							"    4. Validar que el numero de elementos sea igual a 5000\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"Cadena en Status es OK\", function() {\r",
+							"    pm.response.to.have.status(\"OK\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Tiempo de respuesta menor a 600ms\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length == 5000).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/photos",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post mediante JSON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"- Validar campos response \r",
+							"    1. Ingresar el URL https://jsonplaceholder.typicode.com/posts\r",
+							"    2. Ejecutar el Request\r",
+							"    3. En el Body incluir el json  \r",
+							"        {\r",
+							"            \"title\": \"title2\",\r",
+							"            \"body\": \"body2\",\r",
+							"            \"userId\": 100\r",
+							"        }\r",
+							"    3. Validar el status code 201 Created\r",
+							"    4. Validar tipos de datos del contenido del response\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"Status code es 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Recibo cadena Campos Title, Body y numero en userID, id\", function () {\r",
+							"    jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.title).to.be.a('string');\r",
+							"    pm.expect(jsonData.body).to.be.a('string');\r",
+							"    pm.expect(jsonData.userId).to.be.a('number');\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"title2\",\r\n  \"body\": \"body2\",\r\n  \"userId\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post mediante JSON - Enviar JSON Vacio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"- Validar campos response \r",
+							"    1. Ingresar el URL https://jsonplaceholder.typicode.com/posts\r",
+							"    2. Ejecutar el Request\r",
+							"    3. En el Body incluir el json vacío \r",
+							"        {\r",
+							"        }\r",
+							"    3. Validar el status code 201 Created\r",
+							"    4. Validar salida del response \"id\":101\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"Status code es 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"id\", function () {\r",
+							"    jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.id).to.eql(101);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
